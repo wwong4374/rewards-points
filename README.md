@@ -33,7 +33,7 @@ When a points spend occurs, points should be deducted from the system in chronol
 
 ### Points Balance
 
-The service should also return the points balance for a specified payer. For example, if a payer has 700 points, a GET request to `/:payerName/points` should return:
+The service should also return the points balance for a specified payer. For example, if a payer has 700 points, a GET request to `/points/payerName` should return:
 ```javascript
 { "points": 700 }
 ```
