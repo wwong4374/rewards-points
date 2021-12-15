@@ -70,7 +70,7 @@ $ npm -v
 7.21.0
 ```
 
-If a version is shown, the installation was successful! 
+If a version is shown, you're all set! 
 
 
 
