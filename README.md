@@ -55,7 +55,7 @@ $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/
 ```
 The script explains what it will do and then pauses before it does it. 
 
-Next, install Node.js and [npm](https://www.npmjs.com/) by running this command: 
+Next, install [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) by running this command: 
 ```bash
 $ brew install node
 ```
