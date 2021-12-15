@@ -6,7 +6,6 @@ Create a web service to track the earning and spending of points in a shopping r
 
 The service should be able to add point transactions with a specific payer and date, spend points in chronological order (oldest first), and return point balances for each payer. A payer is a company that has partnered with the shopping app, such as Coca Cola or Lays. 
 
-## Functionality
 ### Points Transaction
 Users should be able to add points transactions as they occur. Transactions will be added to the system via a `POST` request. Each transaction contains a payer, points, and timestamp. For example:
 
