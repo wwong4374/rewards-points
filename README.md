@@ -24,9 +24,9 @@ Note that the number of points in a transaction could be negative, reducing that
 When a points spend occurs, points should be deducted from the system in chronological order, with the oldest points being spent first. For each payment, return an object containing the payer and number of points paid. A spend of 500 points might look like: 
 ```javascript
 [
-  {"payer": "DANNON", "points": 100},   
-  {"payer": "CLIFBAR", "points": 300}, 
-  {"payer": "PEPSI", "points": 100}
+  {"payer": "DANNON", "points": -100},   
+  {"payer": "CLIFBAR", "points": -300}, 
+  {"payer": "PEPSI", "points": -100}
 ]
 ```
 
