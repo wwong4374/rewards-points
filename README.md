@@ -76,7 +76,18 @@ $ npm -v
 
 If a version is shown, you're all set! 
 
+## Postman
+Sign up for and install [Postman](https://www.postman.com/). We will be using Postman to send requests to the server. 
 
+# Example Usage
+First, navigate to the repo on your local machine and run `npm start`: 
+```bash
+$ npm start
+```
+This will start up the web service and host it at `http://localhost:1234/`. 
+
+Let's see what transactions are currently stored in our system. Open Postman and start a new collection: 
+![New Collection](./assets/newCollection.png?raw=true) 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
