@@ -80,7 +80,12 @@ If a version is shown, you're all set!
 Sign up for and install [Postman](https://www.postman.com/). We will be using Postman to send requests to the server. 
 
 # Using the Service 
-First, navigate to the repo on your local machine and run `npm start`: 
+First, navigate to the repo on your local machine and install dependencies by running `npm install`: 
+```bash
+$ npm install
+```
+
+Then, run `npm start`:
 ```bash
 $ npm start
 ```
