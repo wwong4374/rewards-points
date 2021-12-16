@@ -112,7 +112,7 @@ Click send. The server will respond with an array of objects representing spent 
 
 ### Points Balance
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`:
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. No parameters are needed:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
 Click send. The server will respond with an array of each payer's current point balances: 
