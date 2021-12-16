@@ -1,9 +1,6 @@
 /* eslint-disable radix */
 /* eslint-disable import/extensions */
-/* eslint-disable max-len */
 /* eslint-disable no-lonely-if */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-plusplus */
 /* eslint-disable arrow-body-style */
 /* eslint-disable object-shorthand */
 /* eslint-disable comma-dangle */
@@ -16,11 +13,12 @@ const app = express();
 // VARIABLES
 const balances = setBalances(transactions);
 
-// API ENDPOINTS
+// API ENDPOINTS:
 // POINTS SPEND
 app.get('/points/spend', (req, res) => {
   const { pointsToSpend } = req.query;
   const spendArray = spendPoints(pointsToSpend, transactions);
+  // TODO: Add spendObjs to transactions array
   res.send(spendArray);
 });
 

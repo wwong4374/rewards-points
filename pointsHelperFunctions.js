@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-lonely-if */
+/* eslint-disable arrow-body-style */
 /* eslint-disable comma-dangle */
 /* eslint-disable radix */
 /* eslint-disable object-shorthand */
@@ -14,11 +17,11 @@ const setBalances = (transactionsArray) => {
       } else {
         console.log(`Invalid transaction: ${transaction}. Payer's point balance cannot go negative.`);
       }
-    } else { // Payer does not yet exist in the system
+    } else { // Payer does not exist in the system
       if (points >= 0) {
         balances[payer] = points;
       } else {
-        console.log(`Invalid transaction: ${transaction}. Payer's point balance cannot go negative.`);
+        console.log(`Invalid transaction: ${transaction}. Payer's first point transaction cannot be negative.`);
       }
     }
   });
@@ -53,17 +56,22 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
   let numPointsRemaining = pointsToSpend;
   const spendArray = [];
 
-  transactionsArray.sort((transactionA, transactionB) => { // Sort transactions by timestamp, oldest to newest
+  // Sort transactionsArray by timestamp, oldest to newest
+  transactionsArray.sort((transactionA, transactionB) => {
     return new Date(transactionA.timestamp) - new Date(transactionB.timestamp);
   });
 
   for (let i = 0; i < transactionsArray.length; i++) {
     const transaction = transactionsArray[i];
     const payer = transaction.payer;
-    const payerPointBalanceOnCurrentDate = getPayerBalanceByDate(payer, transactionsArray, getDateFromTimestamp(transaction.timestamp));
+    // Get payer's point balance as of the current transaction's day
+    const payerPointBalanceOnCurrentDate = getPayerBalanceByDate(
+      payer, transactionsArray, getDateFromTimestamp(transaction.timestamp)
+    );
+
     if (numPointsRemaining === 0) { break; }
     if (transaction.points < 0) { continue; }
-    if (payerPointBalanceOnCurrentDate >= numPointsRemaining) { // Payer can pay all of the remaining points
+    if (payerPointBalanceOnCurrentDate >= numPointsRemaining) { // If payer can pay all of the remaining points
       const spendObj = {
         payer: transaction.payer,
         points: -numPointsRemaining
@@ -73,7 +81,7 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
 
       const transactionObj = spendObj;
       transactionObj.timestamp = transaction.timestamp;
-    } else { // Payer can pay some of the remaining points
+    } else { // If payer can pay some of the remaining points
       const spendObj = {
         payer: transaction.payer,
         points: -payerPointBalanceOnCurrentDate

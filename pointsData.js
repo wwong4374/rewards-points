@@ -1,6 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable arrow-body-style */
-/* eslint-disable indent */
 /* eslint-disable comma-dangle */
 let transactions = [
   { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
@@ -10,6 +7,4 @@ let transactions = [
   { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
 ];
 
-module.exports = {
-  transactions
-};
+module.exports = { transactions };
