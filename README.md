@@ -79,21 +79,41 @@ If a version is shown, you're all set!
 ## Postman
 Sign up for and install [Postman](https://www.postman.com/). We will be using Postman to send requests to the server. 
 
-# Example Usage
+# Using the Service 
 First, navigate to the repo on your local machine and run `npm start`: 
 ```bash
 $ npm start
 ```
 This will start up the web service and host it at `http://localhost:1234/`. 
 
-First, open Postman and start a new collection: 
+Now open Postman and start a new collection: 
 ![New Collection](./assets/newCollection.png?raw=true) 
 
-Next, let's see what transactions are currently stored in our system. In the new collection, create a `GET` request to `http://localhost:1234/points/balance`:
+### Points Transaction
+Let's post a new transaction to the system. Create a `POST` request to `http://localhost:1234/points`:
+![postTransaction](./assets/postTransaction.png?raw=true)
+
+In the query params, add two parameters. The first should have a key of `payer` and value of `PEPSI`. The second should have a key of `points` and value of `500`. These parameters will be automatically appended to the query string: 
+![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
+
+Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system: 
+![listOfTransactions]()
+
+### Points Spend
+Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
+![spendPoints](./assets/spendPoints.png?raw=true)
+
+Click send. The server will respond with an array of objects representing point spends:
+![pointSpends]:
+![pointSpends]()
+
+### Points Balance
+
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. Add a parameter with a key of `payer` and value of `DANNON`:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
-In the query params, add a parameter with a key of `payer` and value of `DANNON`. This parameter will be automatically appended to the query string: 
-![getPointsBalanceFilled](./assets/getPointsBalanceFilled.png?raw=true)
+The server will respond with an array of each payer's current point balances: 
+![pointBalances]()
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
