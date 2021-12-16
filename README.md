@@ -97,7 +97,7 @@ Users should be able to add points transactions as they occur. Transactions will
 }
 ```
 
-Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances cannot go below 0. 
+Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances as of any date cannot go below 0. 
 
 ### Points Spend
 
