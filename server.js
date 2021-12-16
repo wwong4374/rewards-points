@@ -11,7 +11,7 @@ const { setBalances, createTransaction, spendPoints } = require('./pointsHelperF
 const app = express();
 
 // VARIABLES
-const balances = setBalances(transactions);
+let balances = setBalances(transactions);
 
 // API ENDPOINTS:
 // POINTS SPEND
@@ -33,8 +33,9 @@ app.post('/points', (req, res) => {
   let timestamp = new Date();
   if (req.query.timestamp) { timestamp = req.query.timestamp; }
 
+  // TODO: Make sure to update transactions array upon post
   transactions.push(createTransaction(payer, points, timestamp));
-  setBalances(transactions);
+  balances = setBalances(transactions);
 
   res.status(201).json({
     transactions: transactions
