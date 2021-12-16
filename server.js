@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-lonely-if */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-plusplus */
@@ -5,20 +6,12 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable comma-dangle */
 const express = require('express');
+const { transactions } = require('./pointsData.js');
 
 const app = express();
 
 // VARIABLES
-let transactions = [
-  { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
-  { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
-  { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
-  { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
-  { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
-];
 let balances = {};
-let transactionsToSpend = transactions;
-let balancesToSpend = balances;
 
 // HELPER FUNCTIONS
 const setBalances = () => {
@@ -43,21 +36,30 @@ const setBalances = () => {
 };
 setBalances();
 
+// const getPayerBalanceByDate = (payer, transactions, date) => {
+//   // TODO: Given an array of transactions, return the payer's point balance on given date
+//   let balance = 0;
+//   // Iterate transactions
+//     // If transaction was from payer on the given date
+//       // Add current transaction amount to balance
+//   // return balance
+// };
+
 // API ENDPOINTS
+
+// POINTS SPEND
 app.get('/points/spend', (req, res) => {
   const { numPoints } = req.query;
   let numPointsRemaining = numPoints;
   const spentTransactions = [];
 
-  transactions.sort((transactionA, transactionB) => { // Sort transactions oldest to newest
+  transactions.sort((transactionA, transactionB) => { // Sort transactions by timestamp, oldest to newest
     return new Date(transactionA.timestamp) - new Date(transactionB.timestamp);
   });
 
-  // Iterate transactions
   for (let i = 0; i < transactions.length; i++) {
     const transaction = transactions[i];
-    // If transaction can pay all remaining points
-    if (transaction.points >= numPointsRemaining) {
+    if (transaction.points >= numPointsRemaining) { // If transaction can pay all remaining points
       const spendObj = {
         payer: transaction.payer,
         points: -numPointsRemaining
@@ -65,9 +67,8 @@ app.get('/points/spend', (req, res) => {
       spentTransactions.push(spendObj);
       res.send(spentTransactions);
     }
-    // If transaction can pay some of remaining points
     // TODO: Account for negative point transactions. Payer's balance cannot drop below zero
-    if (transaction.points > 0) {
+    if (transaction.points > 0) { // If transaction can pay some of remaining points
       const spendObj = {
         payer: transaction.payer,
         points: -transaction.points
@@ -79,11 +80,12 @@ app.get('/points/spend', (req, res) => {
   res.send('Points spent:');
 });
 
+// POINTS BALANCE
 app.get('/points/balance', (req, res) => {
-  const { payer } = req.query;
   res.send(balances);
 });
 
+// POINTS TRANSACTION
 app.post('/points', (req, res) => {
   const { payer, points } = req.query;
   let timestamp = new Date();
@@ -91,7 +93,7 @@ app.post('/points', (req, res) => {
 
   const transaction = {
     payer: payer,
-    points: points,
+    points: parseInt(points),
     timestamp: timestamp
   };
   transactions.push(transaction);
