@@ -107,13 +107,13 @@ Click send. The server will add the transaction and respond with an array showin
 Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
-Click send. The server will respond with an array of objects representing point spends:
+Click send. The server will respond with an array of objects representing spent points, oldest to newest:
 ![pointSpends]:
 ![pointSpends]()
 
 ### Points Balance
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. Add a parameter with a key of `payer` and value of `DANNON`:
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
 Click send. The server will respond with an array of each payer's current point balances: 
