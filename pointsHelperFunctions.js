@@ -1,3 +1,6 @@
+/* eslint-disable comma-dangle */
+/* eslint-disable radix */
+/* eslint-disable object-shorthand */
 /* eslint-disable prefer-destructuring */
 const setBalances = (transactionsArray) => {
   const balances = {};
@@ -35,6 +38,15 @@ const getPayerBalanceByDate = (payer, transactionsArray, date) => {
     if (transaction.payer === payer && transactionDate === date) { balance += transaction.points; }
   });
   return balance;
+};
+
+const createTransaction = (payer, points, timestamp) => {
+  const transaction = {
+    payer: payer,
+    points: parseInt(points),
+    timestamp: timestamp
+  };
+  return transaction;
 };
 
 const spendPoints = (pointsToSpend, transactionsArray) => {
@@ -80,5 +92,6 @@ module.exports = {
   setBalances,
   getDateFromTimestamp,
   getPayerBalanceByDate,
+  createTransaction,
   spendPoints
 };

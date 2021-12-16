@@ -9,7 +9,7 @@
 /* eslint-disable comma-dangle */
 const express = require('express');
 const { transactions } = require('./pointsData.js');
-const { setBalances, getDateFromTimestamp, getPayerBalanceByDate, spendPoints } = require('./pointsHelperFunctions.js');
+const { setBalances, getDateFromTimestamp, getPayerBalanceByDate, createTransaction, spendPoints } = require('./pointsHelperFunctions.js');
 
 const app = express();
 
@@ -35,12 +35,7 @@ app.post('/points', (req, res) => {
   let timestamp = new Date();
   if (req.query.timestamp) { timestamp = req.query.timestamp; }
 
-  const transaction = {
-    payer: payer,
-    points: parseInt(points),
-    timestamp: timestamp
-  };
-  transactions.push(transaction);
+  transactions.push(createTransaction(payer, points, timestamp));
   setBalances(transactions);
 
   res.status(201).json({
