@@ -114,7 +114,7 @@ Click send. The server will respond with an array of objects representing point 
 
 ### Points Balance
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. Add a parameter with a key of `payer` and value of `DANNON`:
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
 Click send. The server will respond with an array of each payer's current point balances: 
