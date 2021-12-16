@@ -5,6 +5,8 @@
 /* eslint-disable radix */
 /* eslint-disable object-shorthand */
 /* eslint-disable prefer-destructuring */
+const { transactions } = require('./pointsData.js');
+
 const setBalances = (transactionsArray) => {
   const balances = {};
   transactionsArray.forEach((transaction) => {
@@ -81,6 +83,7 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
 
       const transactionObj = spendObj;
       transactionObj.timestamp = transaction.timestamp;
+      transactions.push(transactionObj);
     } else { // If payer can pay some of the remaining points
       const spendObj = {
         payer: transaction.payer,
@@ -91,6 +94,7 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
 
       const transactionObj = spendObj;
       transactionObj.timestamp = transaction.timestamp;
+      transactions.push(transactionObj);
     }
   }
   return spendArray;
