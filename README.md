@@ -6,7 +6,7 @@ Create a web service to track the earning and spending of points in a shopping r
 
 The service should be able to add point transactions with a specific payer and date, spend points in chronological order (oldest first), and return point balances for each payer. A payer is a company that has partnered with the shopping app, such as Coca Cola or Lays. 
 
-For additional information, see the Additional Details section at the bottom of this Readme. 
+For additional information, such as an explanation of how points are spent in chronological order, see the Additional Details section at the bottom of this Readme. 
 
 # Installation
 First, fork and clone this repo, then navigate to the repo on your local drive. 
