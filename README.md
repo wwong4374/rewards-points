@@ -100,16 +100,15 @@ Let's post a new transaction to the system. Create a `POST` request to `http://l
 In the query params, add two parameters. The first should have a key of `payer` and value of `PEPSI`. The second should have a key of `points` and value of `500`. These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
 
-Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system: 
-![listOfTransactions]()
+Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system, including the one we just posted: 
+![listOfTransactions](./assets/listOfTransactions.png?raw=true)
 
 ### Points Spend
 Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
-![pointSpends]:
-![pointSpends]()
+![pointSpends](./assets/pointSpends.png?raw=true)
 
 ### Points Balance
 
@@ -117,7 +116,7 @@ Finally, let's see each payer's point balances. Create a `GET` request to `http:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
 Click send. The server will respond with an array of each payer's current point balances: 
-![pointBalances]()
+![pointBalances](./assets/pointBalances.png?raw=true)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
