@@ -80,14 +80,18 @@ If a version is shown, you're all set!
 Sign up for and install [Postman](https://www.postman.com/). We will be using Postman to send requests to the server. 
 
 # Using the Service 
-First, navigate to the repo on your local machine and run `npm start`: 
+First, navigate to the repo on your local machine and install dependencies by running `npm install`: 
+```bash
+$ npm install
+```
+
+Then, run `npm start`, which will start up the web service and host it at `http://localhost:1234/`:
 ```bash
 $ npm start
 ```
-This will start up the web service and host it at `http://localhost:1234/`. 
 
-Now open Postman and start a new collection: 
-![New Collection](./assets/newCollection.png?raw=true) 
+Now open Postman and start a new request: 
+![newHTTPRequest](./assets/newHTTPRequest.png?raw=true) 
 
 ### Points Transaction
 Let's post a new transaction to the system. Create a `POST` request to `http://localhost:1234/points`:
@@ -103,16 +107,16 @@ Click send. The server will add the transaction and respond with an array showin
 Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
-Click send. The server will respond with an array of objects representing point spends:
+Click send. The server will respond with an array of objects representing spent points, oldest to newest:
 ![pointSpends]:
 ![pointSpends]()
 
 ### Points Balance
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. Add a parameter with a key of `payer` and value of `DANNON`:
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
-The server will respond with an array of each payer's current point balances: 
+Click send. The server will respond with an array of each payer's current point balances: 
 ![pointBalances]()
 
 ## License
