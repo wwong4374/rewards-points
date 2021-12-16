@@ -109,11 +109,15 @@ When a points spend occurs, points should be deducted from the system in chronol
   {"payer": "PEPSI", "points": -100}
 ]
 ```
-NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance as of November 1 to go negative.   
+NOTE: Suppose Cheerios earned 300 and spent 200 points on November 1. Cheerios therefore has a net balance of 300 - 200 = 100 points available to spend as of November 1. 
+
+Even if Cheerios earned additional points after November 1, no more than 100 points may be deducted from Cheerios on November 1. The system is set up such that no payer's point balance, as of any date, may go negative. 
+
+ 
 
 ### Points Balance
 
-The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepse has 1000 points, a `GET` request to `/points/balance` should return:
+The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepsi has 1000 points, a `GET` request to `/points/balance` should return:
 ```javascript
 { 
   "DANNON": 700,
