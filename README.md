@@ -86,8 +86,8 @@ $ npm start
 ```
 This will start up the web service and host it at `http://localhost:1234/`. 
 
-Now open Postman and start a new collection: 
-![New Collection](./assets/newCollection.png?raw=true) 
+Now open Postman and start a new request: 
+![newHTTPRequest](./assets/newHTTPRequest.png?raw=true) 
 
 ### Points Transaction
 Let's post a new transaction to the system. Create a `POST` request to `http://localhost:1234/points`:
