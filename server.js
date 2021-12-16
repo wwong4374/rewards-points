@@ -18,7 +18,6 @@ let balances = setBalances(transactions);
 app.get('/points/spend', (req, res) => {
   const { pointsToSpend } = req.query;
   const spendArray = spendPoints(pointsToSpend, transactions);
-  // TODO: Add spendObjs to transactions array
   res.send(spendArray);
 });
 
@@ -33,7 +32,6 @@ app.post('/points', (req, res) => {
   let timestamp = new Date();
   if (req.query.timestamp) { timestamp = req.query.timestamp; }
 
-  // TODO: Make sure to update transactions array upon post
   transactions.push(createTransaction(payer, points, timestamp));
   balances = setBalances(transactions);
 
