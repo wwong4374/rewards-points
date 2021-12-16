@@ -2,20 +2,12 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable indent */
 /* eslint-disable comma-dangle */
-
 let transactions = [
   { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
   { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
   { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
   { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
   { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
-];
-
-// EXAMPLE: Spend 500 points
-let expectedOutput = [
-  { payer: 'DANNON', points: -100 },
-  { payer: 'UNILEVER', points: -200 },
-  { payer: 'MILLER COORS', points: -4700 }
 ];
 
 module.exports = {

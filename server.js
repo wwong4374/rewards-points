@@ -9,7 +9,7 @@
 /* eslint-disable comma-dangle */
 const express = require('express');
 const { transactions } = require('./pointsData.js');
-const { setBalances, getDateFromTimestamp, getPayerBalanceByDate, createTransaction, spendPoints } = require('./pointsHelperFunctions.js');
+const { setBalances, createTransaction, spendPoints } = require('./pointsHelperFunctions.js');
 
 const app = express();
 
