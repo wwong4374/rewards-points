@@ -12,23 +12,18 @@ let transactions = [
 
 const getDateFromTimestamp = (timestamp) => {
   const date = new Date(timestamp);
-  const dateString = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
-  console.log(dateString);
-  return dateString();
+  const dateString = `${date.getFullYear()}-${(`0${date.getMonth() + 1}`).slice(-2)}-${(`0${date.getDate()}`).slice(-2)}`;
+  return dateString;
 };
-getDateFromTimestamp('2020-09-01T14:00:00Z');
 
 const getPayerBalanceByDate = (payer, transactionsArray, date) => {
   let balance = 0;
   transactionsArray.forEach((transaction) => {
-    // debugger;
     const transactionDate = getDateFromTimestamp(transaction.timestamp);
     if (transaction.payer === payer && transactionDate === date) { balance += transaction.points; }
   });
-  console.log(balance);
   return balance;
 };
-// getPayerBalanceByDate('MILLER COORS', transactions, '2020-11-01');
 
 // EXAMPLE: Spend 500 points
 let expectedOutput = [
