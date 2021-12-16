@@ -86,8 +86,14 @@ $ npm start
 ```
 This will start up the web service and host it at `http://localhost:1234/`. 
 
-Let's see what transactions are currently stored in our system. Open Postman and start a new collection: 
+First, open Postman and start a new collection: 
 ![New Collection](./assets/newCollection.png?raw=true) 
+
+Next, let's see what transactions are currently stored in our system. In the new collection, create a `GET` request to `http://localhost:1234/points/balance`:
+![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
+
+In the query params, add a parameter with a key of `payer` and value of `DANNON`. This parameter will be automatically appended to the query string: 
+![getPointsBalanceFilled](./assets/getPointsBalanceFilled.png?raw=true)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
