@@ -6,40 +6,7 @@ Create a web service to track the earning and spending of points in a shopping r
 
 The service should be able to add point transactions with a specific payer and date, spend points in chronological order (oldest first), and return point balances for each payer. A payer is a company that has partnered with the shopping app, such as Coca Cola or Lays. 
 
-### Points Transaction
-Users should be able to add points transactions as they occur. Transactions will be added to the system via a `POST` request. Each transaction contains a payer, points, and timestamp. For example:
-
-```javascript
-{ 
-  "payer": "DANNON", 
-  "points": 100, 
-  "timestamp": "2020-11-02T14:00:00Z"
-}
-```
-
-Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances cannot go below 0. 
-
-### Points Spend
-
-When a points spend occurs, points should be deducted from the system in chronological order, with the oldest points being spent first. For each payment, return an object containing the payer and number of points paid. A spend of 500 points might look like: 
-```javascript
-[
-  {"payer": "DANNON", "points": -100},   
-  {"payer": "CLIFBAR", "points": -300}, 
-  {"payer": "PEPSI", "points": -100}
-]
-```
-NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance as of November 1 to go negative.   
-
-### Points Balance
-
-The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepse has 1000 points, a `GET` request to `/points/balance` should return:
-```javascript
-{ 
-  "DANNON": 700,
-  "PEPSI": 1000
-}
-```
+For additional information, see the Additional Details section at the bottom of this Readme. 
 
 # Installation
 First, fork and clone this repo, then navigate to the repo on your local drive. 
@@ -117,6 +84,43 @@ Finally, let's see each payer's point balances. Create a `GET` request to `http:
 
 Click send. The server will respond with an array of each payer's current point balances: 
 ![pointBalances](./assets/pointBalances.png?raw=true)
+
+# Additional Details
+### Points Transaction
+Users should be able to add points transactions as they occur. Transactions will be added to the system via a `POST` request. Each transaction contains a payer, points, and timestamp. For example:
+
+```javascript
+{ 
+  "payer": "DANNON", 
+  "points": 100, 
+  "timestamp": "2020-11-02T14:00:00Z"
+}
+```
+
+Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances cannot go below 0. 
+
+### Points Spend
+
+When a points spend occurs, points should be deducted from the system in chronological order, with the oldest points being spent first. For each payment, return an object containing the payer and number of points paid. A spend of 500 points might look like: 
+```javascript
+[
+  {"payer": "DANNON", "points": -100},   
+  {"payer": "CLIFBAR", "points": -300}, 
+  {"payer": "PEPSI", "points": -100}
+]
+```
+NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance as of November 1 to go negative.   
+
+### Points Balance
+
+The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepse has 1000 points, a `GET` request to `/points/balance` should return:
+```javascript
+{ 
+  "DANNON": 700,
+  "PEPSI": 1000
+}
+```
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
