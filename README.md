@@ -29,7 +29,7 @@ When a points spend occurs, points should be deducted from the system in chronol
   {"payer": "PEPSI", "points": -100}
 ]
 ```
-NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance to go negative.   
+NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance as of November 1 to go negative.   
 
 ### Points Balance
 
