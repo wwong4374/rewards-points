@@ -64,7 +64,12 @@ Now open Postman and start a new request:
 Let's post a new transaction to the system. Create a `POST` request to `http://localhost:1234/points`:
 ![postTransaction](./assets/postTransaction.png?raw=true)
 
-In the query params, add two parameters. The first should have a key of `payer` and value of `PEPSI`. The second should have a key of `points` and value of `500`. These parameters will be automatically appended to the query string: 
+In the query params, add three parameters: 
+* The first should have a key of `payer` and value of `PEPSI`. 
+* The second should have a key of `points` and value of `500`. 
+* The third should have a key of `timestamp` and value of `'2020-10-31T10:00:00Z'`.
+
+These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
 
 Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system, including the one we just posted: 
