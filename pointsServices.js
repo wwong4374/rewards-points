@@ -31,7 +31,7 @@ const setBalances = (transactionsArray) => {
   return balances;
 };
 
-let balances = setBalances(transactions);
+const balances = setBalances(transactions);
 
 const getDateFromTimestamp = (timestamp) => {
   const date = new Date(timestamp);
@@ -39,12 +39,14 @@ const getDateFromTimestamp = (timestamp) => {
   return dateString;
 };
 
-const getPayerBalanceByDate = (payer, transactionsArray, date) => {
+const getPayerBalanceByDate = (payer, transactionsArray, dateString) => {
+  const date = new Date(dateString);
   let balance = 0;
   transactionsArray.forEach((transaction) => {
-    const transactionDate = getDateFromTimestamp(transaction.timestamp);
-    // TODO: Add all transactions prior to and including today, instead of just today
-    if (transaction.payer === payer && transactionDate === date) { balance += transaction.points; }
+    const transactionDateString = getDateFromTimestamp(transaction.timestamp);
+    const transactionDate = new Date(transactionDateString);
+    // Add all transactions before and including today
+    if (transaction.payer === payer && transactionDate <= date) { balance += transaction.points; }
   });
   return balance;
 };
