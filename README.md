@@ -92,6 +92,8 @@ Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/po
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
 ![pointSpends](./assets/pointSpends.png?raw=true)
 
+For an explanation of how the point spending order is determined, see the Additional Details section below. 
+
 ## Points Balance
 
 Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. No parameters are needed:
