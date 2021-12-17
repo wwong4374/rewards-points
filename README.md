@@ -6,40 +6,7 @@ Create a web service to track the earning and spending of points in a shopping r
 
 The service should be able to add point transactions with a specific payer and date, spend points in chronological order (oldest first), and return point balances for each payer. A payer is a company that has partnered with the shopping app, such as Coca Cola or Lays. 
 
-### Points Transaction
-Users should be able to add points transactions as they occur. Transactions will be added to the system via a `POST` request. Each transaction contains a payer, points, and timestamp. For example:
-
-```javascript
-{ 
-  "payer": "DANNON", 
-  "points": 100, 
-  "timestamp": "2020-11-02T14:00:00Z"
-}
-```
-
-Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances cannot go below 0. 
-
-### Points Spend
-
-When a points spend occurs, points should be deducted from the system in chronological order, with the oldest points being spent first. For each payment, return an object containing the payer and number of points paid. A spend of 500 points might look like: 
-```javascript
-[
-  {"payer": "DANNON", "points": -100},   
-  {"payer": "CLIFBAR", "points": -300}, 
-  {"payer": "PEPSI", "points": -100}
-]
-```
-NOTE: Suppose Dannon earned 300 and spent 200 points on November 1. During a subsequent spend, no more than 100 points may be deducted from Dannon's balance as of November 1, because that would cause its balance to go negative.   
-
-### Points Balance
-
-The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepse has 1000 points, a `GET` request to `/points/balance` should return:
-```javascript
-{ 
-  "DANNON": 700,
-  "PEPSI": 1000
-}
-```
+For additional information, such as an explanation of how points are spent in chronological order, see the Additional Details section at the bottom of this Readme. 
 
 # Installation
 First, fork and clone this repo, then navigate to the repo on your local drive. 
@@ -93,31 +60,88 @@ $ npm start
 Now open Postman and start a new request: 
 ![newHTTPRequest](./assets/newHTTPRequest.png?raw=true) 
 
-### Points Transaction
+## Points Transaction
 Let's post a new transaction to the system. Create a `POST` request to `http://localhost:1234/points`:
 ![postTransaction](./assets/postTransaction.png?raw=true)
 
-In the query params, add two parameters. The first should have a key of `payer` and value of `PEPSI`. The second should have a key of `points` and value of `500`. These parameters will be automatically appended to the query string: 
+In the query params, add three parameters: 
+* The first should have a key of `payer` and value of `DANNON`. 
+* The second should have a key of `points` and value of `300`. 
+* The third should have a key of `timestamp` and value of `'2020-10-31T10:00:00Z'`.
+
+These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
 
-Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system: 
-![listOfTransactions]()
+Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system, including the one we just posted: 
+![listOfTransactions](./assets/listOfTransactions.png?raw=true)
 
-### Points Spend
-Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
+Before we spend any points, `POST` these additional transactions:
+```bash
+[
+  { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
+  { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
+  { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
+  { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
+]
+```
+
+## Points Spend
+Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
-![pointSpends]:
-![pointSpends]()
+![pointSpends](./assets/pointSpends.png?raw=true)
 
-### Points Balance
+For an explanation of how the point spending order is determined, see the Additional Details section below. 
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`:
+## Points Balance
+
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. No parameters are needed:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
 Click send. The server will respond with an array of each payer's current point balances: 
-![pointBalances]()
+![pointBalances](./assets/pointBalances.png?raw=true)
+
+# Additional Details
+### Points Transaction
+Users should be able to add points transactions as they occur. Transactions will be added to the system via a `POST` request. Each transaction contains a payer, points, and timestamp. For example:
+
+```javascript
+{ 
+  "payer": "DANNON", 
+  "points": 100, 
+  "timestamp": "2020-11-02T14:00:00Z"
+}
+```
+
+Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances as of any date cannot go below 0. 
+
+### Points Spend
+
+When a points spend occurs, points should be deducted from the system in chronological order, with the oldest points being spent first. For each payment, return an object containing the payer and number of points paid. A spend of 500 points might look like: 
+```javascript
+[
+  {"payer": "DANNON", "points": -100},   
+  {"payer": "CLIFBAR", "points": -300}, 
+  {"payer": "PEPSI", "points": -100}
+]
+```
+NOTE: Suppose Cheerios earned 300 and spent 200 points on November 1. Cheerios therefore has a net balance of 300 - 200 = 100 points available to spend as of November 1. 
+
+Even if Cheerios earned additional points after November 1, no more than 100 points may be deducted from Cheerios on November 1. The system is set up such that no payer's point balance, as of any date, may go negative. 
+
+ 
+
+### Points Balance
+
+The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepsi has 1000 points, a `GET` request to `/points/balance` should return:
+```javascript
+{ 
+  "DANNON": 700,
+  "PEPSI": 1000
+}
+```
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
