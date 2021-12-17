@@ -40,6 +40,7 @@ const getPayerBalanceByDate = (payer, transactionsArray, date) => {
   let balance = 0;
   transactionsArray.forEach((transaction) => {
     const transactionDate = getDateFromTimestamp(transaction.timestamp);
+    // TODO: Add all transactions prior to and including today, instead of just today 
     if (transaction.payer === payer && transactionDate === date) { balance += transaction.points; }
   });
   return balance;

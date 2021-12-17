@@ -6,7 +6,7 @@
 /* eslint-disable comma-dangle */
 const express = require('express');
 const { transactions } = require('./pointsData.js');
-const { setBalances, createTransaction, spendPoints } = require('./pointsHelperFunctions.js');
+const { setBalances, createTransaction, spendPoints } = require('./pointsServices.js');
 
 const app = express();
 
