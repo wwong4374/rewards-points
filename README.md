@@ -72,7 +72,7 @@ In the query params, add three parameters:
 These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
 
-Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system, including the one we just posted: 
+Click send. The server will add the transaction and respond with an array of all transactions stored in the system, which currently only includes the one that was just posted:
 ![listOfTransactions](./assets/listOfTransactions.png?raw=true)
 
 Before we spend any points, `POST` these additional transactions:
