@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-lonely-if */
 /* eslint-disable arrow-body-style */
@@ -30,6 +31,8 @@ const setBalances = (transactionsArray) => {
   return balances;
 };
 
+let balances = setBalances(transactions);
+
 const getDateFromTimestamp = (timestamp) => {
   const date = new Date(timestamp);
   const dateString = `${date.getFullYear()}-${(`0${date.getMonth() + 1}`).slice(-2)}-${(`0${date.getDate()}`).slice(-2)}`;
@@ -40,7 +43,7 @@ const getPayerBalanceByDate = (payer, transactionsArray, date) => {
   let balance = 0;
   transactionsArray.forEach((transaction) => {
     const transactionDate = getDateFromTimestamp(transaction.timestamp);
-    // TODO: Add all transactions prior to and including today, instead of just today 
+    // TODO: Add all transactions prior to and including today, instead of just today
     if (transaction.payer === payer && transactionDate === date) { balance += transaction.points; }
   });
   return balance;
@@ -73,7 +76,7 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
     );
 
     if (numPointsRemaining === 0) { break; }
-    if (transaction.points < 0) { continue; }
+    if (transaction.points <= 0) { continue; }
     if (payerPointBalanceOnCurrentDate >= numPointsRemaining) { // If payer can pay all of the remaining points
       const spendObj = {
         payer: transaction.payer,
@@ -86,22 +89,25 @@ const spendPoints = (pointsToSpend, transactionsArray) => {
       transactionObj.timestamp = transaction.timestamp;
       transactions.push(transactionObj);
     } else { // If payer can pay some of the remaining points
-      const spendObj = {
-        payer: transaction.payer,
-        points: -payerPointBalanceOnCurrentDate
-      };
-      spendArray.push(spendObj);
-      numPointsRemaining -= payerPointBalanceOnCurrentDate;
+      if (payerPointBalanceOnCurrentDate > 0) {
+        const spendObj = {
+          payer: transaction.payer,
+          points: -payerPointBalanceOnCurrentDate
+        };
+        spendArray.push(spendObj);
+        numPointsRemaining -= payerPointBalanceOnCurrentDate;
 
-      const transactionObj = spendObj;
-      transactionObj.timestamp = transaction.timestamp;
-      transactions.push(transactionObj);
+        const transactionObj = spendObj;
+        transactionObj.timestamp = transaction.timestamp;
+        transactions.push(transactionObj);
+      }
     }
   }
   return spendArray;
 };
 
 module.exports = {
+  balances,
   setBalances,
   getDateFromTimestamp,
   getPayerBalanceByDate,

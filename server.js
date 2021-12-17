@@ -6,18 +6,19 @@
 /* eslint-disable comma-dangle */
 const express = require('express');
 const { transactions } = require('./pointsData.js');
-const { setBalances, createTransaction, spendPoints } = require('./pointsServices.js');
+let { balances, setBalances, createTransaction, spendPoints } = require('./pointsServices.js');
 
 const app = express();
 
 // VARIABLES
-let balances = setBalances(transactions);
+// let balances = setBalances(transactions);
 
 // API ENDPOINTS:
 // POINTS SPEND
 app.get('/points/spend', (req, res) => {
   const { pointsToSpend } = req.query;
   const spendArray = spendPoints(pointsToSpend, transactions);
+  balances = setBalances(transactions);
   res.send(spendArray);
 });
 
