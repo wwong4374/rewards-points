@@ -75,8 +75,18 @@ These parameters will be automatically appended to the query string:
 Click send. The server will add the transaction and respond with an array showing all transactions currently stored in the system, including the one we just posted: 
 ![listOfTransactions](./assets/listOfTransactions.png?raw=true)
 
+Before we spend any points, `POST` these additional transactions:
+```bash
+[
+  { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
+  { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
+  { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
+  { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
+]
+```
+
 ## Points Spend
-Next, let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
+Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
