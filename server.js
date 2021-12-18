@@ -77,8 +77,9 @@ const spendPoints = (pointsToSpend) => {
 // API ENDPOINTS:
 // POINTS SPEND
 app.get('/points/spend', (req, res) => {
-  const { pointsToSpend } = req.query;
-  const spentPoints = spendPoints(pointsToSpend);
+  console.log(req.query);
+  const { points } = req.query;
+  const spentPoints = spendPoints(points);
   res.send(spentPoints);
 });
 
