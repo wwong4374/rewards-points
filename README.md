@@ -86,7 +86,7 @@ Before we spend any points, `POST` these additional transactions. Do not include
 ```
 
 ## Points Spend
-Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `pointsToSpend` and value of `5000`:
+Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/points/spend`. Add a parameter with a key of `points` and value of `5000`:
 ![spendPoints](./assets/spendPoints.png?raw=true)
 
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
