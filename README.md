@@ -67,15 +67,15 @@ Let's post a new transaction to the system. Create a `POST` request to `http://l
 In the query params, add three parameters: 
 * The first should have a key of `payer` and value of `DANNON`. 
 * The second should have a key of `points` and value of `300`. 
-* The third should have a key of `timestamp` and value of `'2020-10-31T10:00:00Z'`.
+* The third should have a key of `timestamp` and value of `2020-10-31T10:00:00Z`.
 
 These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
 
-Click send. The server will add the transaction and respond with an array of all transactions stored in the system, which currently only includes the one that was just posted:
+Click send. The server will add the transaction to the system and then sort the list of transactions, oldest to newest. If the post was successful, the server will respond with a 201 status code: 
 ![listOfTransactions](./assets/listOfTransactions.png?raw=true)
 
-Before we spend any points, `POST` these additional transactions:
+Before we spend any points, `POST` these additional transactions. Do not include the single quotes around the timestamp query param when typing into Postman: 
 ```bash
 [
   { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
@@ -92,15 +92,20 @@ Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/po
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
 ![pointSpends](./assets/pointSpends.png?raw=true)
 
-For an explanation of how the point spending order is determined, see the Additional Details section below. 
+For an explanation of how the point spending order is determined, see the Additional Details section below. Note that each spent point object is also added to the list of transactions in the system. 
 
 ## Points Balance
 
-Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points/balance`. No parameters are needed:
+Finally, let's see each payer's point balances. Create a `GET` request to `http://localhost:1234/points`. No parameters are needed:
 ![getPointsBalance](./assets/getPointsBalance.png?raw=true) 
 
-Click send. The server will respond with an array of each payer's current point balances: 
+Click send. The server will respond with a list of each payer's current point balances: 
 ![pointBalances](./assets/pointBalances.png?raw=true)
+
+## Show All Transactions
+To see all historical point transactions in the system, create a `GET` request to `http://localhost:1234/points/transactions`. Point spends are transactions, so spend events are included in the transaction list: 
+![transactionsInSystem](./assets/transactionsInSystem.png?raw=true)
+
 
 # Additional Details
 ### Points Transaction
