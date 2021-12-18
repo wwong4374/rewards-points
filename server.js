@@ -18,9 +18,8 @@ let balances = {};
 // POINTS SPEND
 app.get('/points/spend', (req, res) => {
   const { pointsToSpend } = req.query;
-  const spendArray = spendPoints(pointsToSpend, transactions);
-  // balances = setBalances(transactions);
-  res.send(spendArray);
+  const spentPoints = spendPoints(pointsToSpend, transactions);
+  res.send(spentPoints);
 });
 
 // POINTS BALANCE
@@ -35,7 +34,6 @@ app.post('/points', (req, res) => {
   let newTimestamp = new Date();
   if (req.query.timestamp) { newTimestamp = new Date(req.query.timestamp); }
   const newTransaction = { payer: payer, points: Number(points), timestamp: newTimestamp };
-  // console.log('TIMESTAMP IS A------------------', typeof newTransaction.timestamp);
 
   // Add newTransaction to transactions array
   transactions.push(newTransaction);
@@ -44,13 +42,12 @@ app.post('/points', (req, res) => {
   transactions = transactions.sort((transactionA, transactionB) => {
     return new Date(transactionA.timestamp) - new Date(transactionB.timestamp);
   });
-  // console.log('TRANSACTION ARRAY----------------------', transactions);
 
   // Update payer's point balance
   if (balances[payer]) {
-    balances[payer] += points;
+    balances[payer] += Number(points);
   } else {
-    balances[payer] = points;
+    balances[payer] = Number(points);
   }
 
   res.sendStatus(201);
@@ -62,11 +59,13 @@ app.get('/transactions', (req, res) => {
 
 app.listen(1234, console.log('Server listening on port 1234...'));
 
+module.exports = { balances };
+
 // SAMPLE DATA
-// let transactions = [
-//   { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
-//   { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z'},
-//   { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
-//   { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
-//   { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
-// ];
+let sampleTransactions = [
+  { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
+  { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
+  { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
+  { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
+  { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
+];
