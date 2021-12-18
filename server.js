@@ -6,13 +6,58 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable comma-dangle */
 const express = require('express');
-const { spendPoints } = require('./pointsServices.js');
 
 const app = express();
 
 // VARIABLES
 let transactions = [];
 let balances = {};
+
+// FUNCTIONS
+const spendPoints = (pointsToSpend, transactions) => {
+  let pointsRemainingToSpend = pointsToSpend;
+  const spentPoints = [];
+  const payerIndices = {};
+  const payers = [];
+
+  // Iterate transactions
+  for (let i = 0; i < transactions.length; i++) {
+    const transaction = transactions[i];
+    const { payer, points } = transaction;
+
+    // If we have reached the spend amount, exit the loop
+    if (pointsRemainingToSpend === 0) { break; }
+
+    const pointsSpentThisTransaction = Math.min(points, pointsRemainingToSpend);
+    // Payer is new to this spend
+    if (!payers.includes(payer)) {
+      // Add spendObj to spentPoints array
+      const spendObj = { payer: payer, points: -pointsSpentThisTransaction };
+      spentPoints.push(spendObj);
+      // Add payer to payers array
+      payers.push(payer);
+      // Store array index of payer's spendObj within spentPoints array
+      payerIndices[payer] = spentPoints.length - 1;
+      // Decrement remaining points to spend
+      pointsRemainingToSpend -= pointsSpentThisTransaction;
+      balances[payer] -= pointsSpentThisTransaction;
+    } else { // Payer is already included in this spend
+      // Find the payer's existing spendObj
+      const payerIndex = payerIndices[payer];
+      const spendObj = spentPoints[payerIndex];
+      // If current transaction would cause payer's point balance to go negative, skip it
+      if (spendObj.points + points > 0) {
+        continue;
+      } else {
+        spentPoints[payerIndex].points -= pointsSpentThisTransaction;
+        pointsRemainingToSpend -= pointsSpentThisTransaction;
+        balances[payer] -= pointsSpentThisTransaction;
+      }
+    }
+  }
+
+  return spentPoints;
+};
 
 // API ENDPOINTS:
 // POINTS SPEND
@@ -23,7 +68,7 @@ app.get('/points/spend', (req, res) => {
 });
 
 // POINTS BALANCE
-app.get('/points/balance', (req, res) => {
+app.get('/points', (req, res) => {
   res.send(balances);
 });
 
@@ -59,13 +104,13 @@ app.get('/transactions', (req, res) => {
 
 app.listen(1234, console.log('Server listening on port 1234...'));
 
-module.exports = { balances };
+// module.exports = { balances };
 
 // SAMPLE DATA
-let sampleTransactions = [
-  { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
-  { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
-  { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
-  { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
-  { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
-];
+// let transactions = [
+//   { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
+//   { payer: 'UNILEVER', points: 200, timestamp: '2020-10-31T11:00:00Z' },
+//   { payer: 'DANNON', points: -200, timestamp: '2020-10-31T15:00:00Z' },
+//   { payer: 'MILLER COORS', points: 10000, timestamp: '2020-11-01T14:00:00Z' },
+//   { payer: 'DANNON', points: 1000, timestamp: '2020-11-02T14:00:00Z' }
+// ];
