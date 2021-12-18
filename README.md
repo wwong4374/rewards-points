@@ -67,7 +67,7 @@ Let's post a new transaction to the system. Create a `POST` request to `http://l
 In the query params, add three parameters: 
 * The first should have a key of `payer` and value of `DANNON`. 
 * The second should have a key of `points` and value of `300`. 
-* The third should have a key of `timestamp` and value of `'2020-10-31T10:00:00Z'`.
+* The third should have a key of `timestamp` and value of `2020-10-31T10:00:00Z`.
 
 These parameters will be automatically appended to the query string: 
 ![postTransactionFilled](./assets/postTransactionFilled.png?raw=true)
