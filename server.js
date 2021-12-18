@@ -119,8 +119,6 @@ app.get('/transactions', (req, res) => {
 
 app.listen(1234, console.log('Server listening on port 1234...'));
 
-// module.exports = { balances };
-
 // SAMPLE DATA
 // let transactions = [
 //   { payer: 'DANNON', points: 300, timestamp: '2020-10-31T10:00:00Z' },
