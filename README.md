@@ -52,7 +52,7 @@ First, navigate to the repo on your local machine and install dependencies by ru
 $ npm install
 ```
 
-Then, run `npm start`, which will start up the web service and host it at `http://localhost:1234/`:
+Then, run `npm start`, which will start up the web service written in `server.js` and host it at `http://localhost:1234/`:
 ```bash
 $ npm start
 ```
@@ -92,7 +92,7 @@ Now let's spend 5000 points. Create a `GET` request to `http://localhost:1234/po
 Click send. The server will respond with an array of objects representing spent points, oldest to newest:
 ![pointSpends](./assets/pointSpends.png?raw=true)
 
-For an explanation of how the point spending order is determined, see the Additional Details section below. Note that each spent point object is also added to the list of transactions in the system. 
+For an explanation of how the point spending order is determined, see the Additional Details section below. Note that each spent point is also added to the list of transactions in the system. 
 
 ## Points Balance
 
@@ -103,7 +103,7 @@ Click send. The server will respond with a list of each payer's current point ba
 ![pointBalances](./assets/pointBalances.png?raw=true)
 
 ## Show All Transactions
-To see all historical point transactions in the system, create a `GET` request to `http://localhost:1234/points/transactions`. Point spends are transactions, so spend events are included in the transaction list: 
+To see all historical point transactions in the system, create a `GET` request to `http://localhost:1234/transactions`. The server will respond with a list of all transactions in the system: 
 ![transactionsInSystem](./assets/transactionsInSystem.png?raw=true)
 
 
@@ -119,7 +119,7 @@ Users should be able to add points transactions as they occur. Transactions will
 }
 ```
 
-Note that the number of points in a transaction could be negative, reducing that payer's points balance. Point balances as of any date cannot go below 0. 
+A negative points value indicates a point spend. 
 
 ### Points Spend
 
@@ -131,15 +131,13 @@ When a points spend occurs, points should be deducted from the system in chronol
   {"payer": "PEPSI", "points": -100}
 ]
 ```
-NOTE: Suppose Cheerios earned 300 and spent 200 points on November 1. Cheerios therefore has a net balance of 300 - 200 = 100 points available to spend as of November 1. 
+For any given day, a payer may not spend more points than they earned. This applies even if the payer earned additional points on a later day. 
 
-Even if Cheerios earned additional points after November 1, no more than 100 points may be deducted from Cheerios on November 1. The system is set up such that no payer's point balance, as of any date, may go negative. 
-
- 
+For example, supposed DANNON earned 300 points on Nov 1, spent 200 points on Nov 1, and earned 1000 points on Nov 9. On a subsequent point spend, no more than 300 - 200 = 100 points may be spent from DANNON's balance as of Nov 1,  because otherwise its point balance as of Nov 1 would go negative. 
 
 ### Points Balance
 
-The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepsi has 1000 points, a `GET` request to `/points/balance` should return:
+The service should also return the points balance for each payer. For example, if Dannon has 700 points and Pepsi has 1000 points, a `GET` request to `/points` should return:
 ```javascript
 { 
   "DANNON": 700,
