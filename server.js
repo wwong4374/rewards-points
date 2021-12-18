@@ -14,16 +14,17 @@ let transactions = [];
 let balances = {};
 
 // FUNCTIONS
-const spendPoints = (pointsToSpend, transactions) => {
+const spendPoints = (pointsToSpend) => {
   let pointsRemainingToSpend = pointsToSpend;
   const spentPoints = [];
+  const newTransactions = [];
   const payerIndices = {};
   const payers = [];
 
   // Iterate transactions
   for (let i = 0; i < transactions.length; i++) {
     const transaction = transactions[i];
-    const { payer, points } = transaction;
+    const { payer, points, timestamp } = transaction;
 
     // If we have reached the spend amount, exit the loop
     if (pointsRemainingToSpend === 0) { break; }
@@ -54,7 +55,21 @@ const spendPoints = (pointsToSpend, transactions) => {
         balances[payer] -= pointsSpentThisTransaction;
       }
     }
+    // Add spend transaction to newTransactions array
+    const newTransaction = {
+      payer: payer,
+      points: -pointsSpentThisTransaction,
+      timestamp: timestamp
+    };
+    newTransactions.push(newTransaction);
   }
+
+  // Add spend transactions to transaction array
+  transactions.push(...newTransactions);
+  // Sort transactions array by timestamp, oldest to newest
+  transactions = transactions.sort((transactionA, transactionB) => {
+    return new Date(transactionA.timestamp) - new Date(transactionB.timestamp);
+  });
 
   return spentPoints;
 };
@@ -63,7 +78,7 @@ const spendPoints = (pointsToSpend, transactions) => {
 // POINTS SPEND
 app.get('/points/spend', (req, res) => {
   const { pointsToSpend } = req.query;
-  const spentPoints = spendPoints(pointsToSpend, transactions);
+  const spentPoints = spendPoints(pointsToSpend);
   res.send(spentPoints);
 });
 
