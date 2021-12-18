@@ -103,7 +103,7 @@ Click send. The server will respond with a list of each payer's current point ba
 ![pointBalances](./assets/pointBalances.png?raw=true)
 
 ## Show All Transactions
-To see all historical point transactions in the system, create a `GET` request to `http://localhost:1234/transactions`. The server will respond with a list of all transactions in the system: 
+To see all historical point transactions in the system, send a `GET` request to `http://localhost:1234/transactions`. The server will respond with a list of all transactions in the system: 
 ![transactionsInSystem](./assets/transactionsInSystem.png?raw=true)
 
 
